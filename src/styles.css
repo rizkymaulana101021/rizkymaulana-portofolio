@@ -1,0 +1,231 @@
+@import 'tailwindcss' source('../');
+
+@plugin "tailwindcss-animate";
+@plugin "@tailwindcss/typography";
+
+/*
+ * Design direction: "service manual".
+ * Warm paper, hard ink, one signal-orange accent — the colour of a
+ * safety tag on a rack. Condensed display type, monospace for anything
+ * that is metadata (ports, dates, ticket numbers). No gradients, no
+ * glassmorphism, no rounded-everything. Rules and grids do the work.
+ */
+
+:root {
+  --paper: #ece8df;
+  --paper-2: #e2ddd1;
+  --ink: #131210;
+  --ink-2: #3a3833;
+  --mute: #6f6b62;
+  --rule: #131210;
+  --signal: #ff4f1a;
+  --signal-ink: #b8330b;
+  --ok: #2f9e44;
+
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: var(--paper);
+  --card-foreground: var(--ink);
+  --popover: var(--paper);
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: var(--paper);
+  --secondary: var(--paper-2);
+  --secondary-foreground: var(--ink);
+  --muted: var(--paper-2);
+  --muted-foreground: var(--mute);
+  --accent: var(--signal);
+  --accent-foreground: var(--ink);
+  --destructive: #c92a2a;
+  --border: color-mix(in oklab, var(--ink) 18%, transparent);
+  --input: var(--ink);
+  --ring: var(--signal);
+  --radius: 0px;
+}
+
+@theme inline {
+  --font-display: 'Archivo', 'Arial Narrow', sans-serif;
+  --font-sans: 'Archivo', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-mute: var(--mute);
+  --color-signal: var(--signal);
+  --color-signal-ink: var(--signal-ink);
+  --color-ok: var(--ok);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+
+  --animate-rise: rise 0.7s cubic-bezier(0.2, 0.7, 0.1, 1) both;
+  --animate-blink: blink 1.6s steps(2, start) infinite;
+  --animate-marquee: marquee 38s linear infinite;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply m-0 bg-paper text-ink font-sans antialiased;
+    font-feature-settings: 'ss01', 'tnum';
+  }
+  ::selection {
+    background: var(--signal);
+    color: var(--ink);
+  }
+  :focus-visible {
+    outline: 3px solid var(--signal);
+    outline-offset: 3px;
+  }
+  /* Blueprint grid behind everything, very faint. */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, rgb(19 18 16 / 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(19 18 16 / 0.045) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+}
+
+@layer components {
+  .display {
+    font-family: var(--font-display);
+    font-stretch: 75%;
+    font-weight: 800;
+    line-height: 0.88;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  .wide {
+    font-stretch: 125%;
+  }
+  .kicker {
+    @apply font-mono text-[11px] uppercase tracking-[0.18em] text-mute;
+  }
+  .shell {
+    @apply mx-auto w-full max-w-[1320px] px-5 sm:px-8;
+  }
+  .hairline {
+    border-color: var(--rule);
+  }
+  .tag {
+    @apply inline-flex items-center border border-ink/70 px-2 py-0.5 font-mono text-[11px] uppercase tracking-wider;
+  }
+  .btn,
+  .contact-button {
+    @apply inline-flex items-center gap-3 border-2 border-ink bg-ink px-5 py-3 font-mono text-xs font-bold uppercase tracking-[0.14em] text-paper transition-[transform,box-shadow] duration-150;
+    box-shadow: 4px 4px 0 var(--signal);
+  }
+  .btn:hover,
+  .contact-button:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--signal);
+  }
+  .btn:active,
+  .contact-button:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0 0 0 var(--signal);
+  }
+  .btn-ghost {
+    @apply inline-flex items-center gap-3 border-2 border-ink px-5 py-3 font-mono text-xs font-bold uppercase tracking-[0.14em] transition-colors hover:bg-ink hover:text-paper;
+  }
+  .link-u {
+    background: linear-gradient(var(--signal), var(--signal)) 0 100% / 0 2px
+      no-repeat;
+    transition: background-size 0.25s ease;
+  }
+  .link-u:hover {
+    background-size: 100% 2px;
+  }
+  .led {
+    @apply inline-block size-2 rounded-full bg-ok;
+    box-shadow: 0 0 0 3px rgb(47 158 68 / 0.18);
+  }
+  .stamp {
+    @apply inline-block -rotate-3 border-2 border-signal-ink px-3 py-1 font-mono text-xs font-bold uppercase tracking-[0.2em] text-signal-ink;
+  }
+  .contact-input {
+    @apply w-full border-0 border-b-2 border-ink bg-transparent px-0 py-3 text-lg placeholder:text-mute/70 focus-visible:border-signal focus-visible:outline-none;
+  }
+}
+
+.prose {
+  overflow-wrap: anywhere;
+  --tw-prose-body: var(--ink-2);
+  --tw-prose-headings: var(--ink);
+  --tw-prose-bold: var(--ink);
+  --tw-prose-bullets: var(--signal);
+  --tw-prose-links: var(--ink);
+}
+
+.prose pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+dialog::backdrop {
+  background: rgb(19 18 16 / 0.92);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
