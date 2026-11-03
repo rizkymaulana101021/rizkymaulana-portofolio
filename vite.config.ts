@@ -6,6 +6,7 @@ import netlify from '@netlify/vite-plugin-tanstack-start'
 import contentCollections from '@content-collections/vite'
 
 const config = defineConfig({
+  base: '/rizkymaulana-portofolio/',
   resolve: { tsconfigPaths: true },
   plugins: [
     contentCollections(),
