@@ -26,19 +26,19 @@ export const galleryCategories: { id: GalleryCategory | 'all'; label: string }[]
 export const gallery: GalleryPhoto[] = [
   {
     id: 'rack-cabling',
-    src: '/img/rack-cabling.png',
-    title: 'Colour-coded or it didn’t happen',
+    src: '/img/up3.jpg',
+    title: 'Build Web Project',
     caption:
-      'Blue for staff, green for servers, yellow for cameras, white for uplinks. Velcro, never zip ties.',
+      'Buat Web basis Codeigniter 3, Portofolio, Web Aset Perusahaan, Web Repository Dokumen, Web Sistem Informasi Desa, Web CRUD.',
     category: 'infra',
     size: 'wide',
   },
   {
     id: 'cable-chaos',
-    src: '/img/cable-chaos.png',
-    title: 'The “before” photo',
+    src: '/img/up1.jpg',
+    title: 'Clean Restore laptop',
     caption:
-      'Every comms closet I inherit looks like this. Ten years of “just one more cable”.',
+      'Melakukan Restore setelan pabrik setelah digunakan user dan dikembalikan ke aset perusahaan”.',
     category: 'infra',
     size: 'tall',
   },
